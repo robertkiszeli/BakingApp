@@ -8,7 +8,7 @@ class RetrofitClient {
     private static Retrofit retrofit = null;
 
     static Retrofit getClient(String baseUrl) {
-        if (retrofit==null) {
+        if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())

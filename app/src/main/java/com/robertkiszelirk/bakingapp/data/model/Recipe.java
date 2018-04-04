@@ -1,16 +1,30 @@
 package com.robertkiszelirk.bakingapp.data.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Recipe implements Parcelable
-{
+import java.util.ArrayList;
 
+public class Recipe implements Parcelable {
+
+    public final static Parcelable.Creator<Recipe> CREATOR = new Creator<Recipe>() {
+
+
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        public Recipe[] newArray(int size) {
+            return (new Recipe[size]);
+        }
+
+    };
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -29,21 +43,6 @@ public class Recipe implements Parcelable
     @SerializedName("image")
     @Expose
     private String image;
-    public final static Parcelable.Creator<Recipe> CREATOR = new Creator<Recipe>() {
-
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
-        }
-
-        public Recipe[] newArray(int size) {
-            return (new Recipe[size]);
-        }
-
-    };
 
     protected Recipe(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));

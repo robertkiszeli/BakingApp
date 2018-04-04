@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">Baking App</string>
+
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="no_internet_connection">No internet connection, check connection and restart application.</string>
+
+    <string name="pass_recipe_in_intent">recipeData</string>
+
+    <string name="recipe_card_steps_content_description">Recipe steps to complete</string>
+    <string name="recipe_card_ingredients_content_description">Number of ingredients needed</string>
+    <string name="recipe_card_servings_content_description">Number of servings</string>
+    <string name="recipe_card_image_content_description">Image the finished recipe</string>
+
+    <string name="instance_state_save_pass_recipe">instanceStatePassRecipe</string>
+    <string name="pass_step_data_to_fragment_bundle">stepData</string>
+    <string name="no_passed_data">No passed data</string>
+    <string name="pass_variable_two_fragment">twoFragment</string>
+    <string name="ingredient_and_steps_current_step">currentStep</string>
+    <string name="fragment_step_no_video_image_content_description">No video for this step.</string>
+
+    <string name="fragment_ingredients_and_steps_ingredients_button_text">Ingredients</string>
+    <string name="fragment_ingredients_and_steps_steps_button_text">Steps</string>
+    <string name="add_to_widget">Add to widget</string>
+    <string name="failed_to_set_widget">Failed to set Widget!</string>
 </resources>

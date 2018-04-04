@@ -2,4 +2,131 @@
 <resources>
     <dimen name="progress_bar_width">40dp</dimen>
     <dimen name="progress_bar_height">40dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
+
+    <dimen name="baking_app_main_no_internet_connection_text_size">24sp</dimen>
+
+    <dimen name="recipe_card_view_height">240dp</dimen>
+    <dimen name="recipe_card_view_margin">10dp</dimen>
+    <dimen name="recipe_card_view_elevation">2dp</dimen>
+
+    <dimen name="recipe_card_text_back_height">80dp</dimen>
+    <dimen name="recipe_card_text_back_margin">0dp</dimen>
+
+    <dimen name="recipe_card_recipe_name_height">32dp</dimen>
+    <dimen name="recipe_card_recipe_name_margin_end">8dp</dimen>
+    <dimen name="recipe_card_recipe_name_margin_start">8dp</dimen>
+    <dimen name="recipe_card_recipe_name_margin_top">8dp</dimen>
+    <dimen name="recipe_card_recipe_name_text_size">24sp</dimen>
+
+    <dimen name="recipe_card_peoples_image_height">24dp</dimen>
+    <dimen name="recipe_card_peoples_image_width">24dp</dimen>
+    <dimen name="recipe_card_peoples_image_margin_top">0dp</dimen>
+    <dimen name="recipe_card_peoples_image_margin_bottom">0dp</dimen>
+    <dimen name="recipe_card_peoples_image_margin_start">16dp</dimen>
+
+    <dimen name="recipe_card_servings_number_height">24dp</dimen>
+    <dimen name="recipe_card_servings_number_margin_start">8dp</dimen>
+    <dimen name="recipe_card_servings_number_text_size">16sp</dimen>
+
+    <dimen name="recipe_card_ingredients_image_width">24dp</dimen>
+    <dimen name="recipe_card_ingredients_image_height">24dp</dimen>
+    <dimen name="recipe_card_ingredients_image_margin_end">8dp</dimen>
+    <dimen name="recipe_card_ingredients_image_margin_start">8dp</dimen>
+
+    <dimen name="recipe_card_ingredients_number_height">24dp</dimen>
+    <dimen name="recipe_card_ingredients_number_text_size">16sp</dimen>
+    <dimen name="recipe_card_ingredients_number_margin_start">8dp</dimen>
+
+    <dimen name="recipe_card_steps_image_width">24dp</dimen>
+    <dimen name="recipe_card_steps_image_height">24dp</dimen>
+    <dimen name="recipe_card_steps_image_margin_end">8dp</dimen>
+    <dimen name="recipe_card_steps_number_height">24dp</dimen>
+    <dimen name="recipe_card_steps_number_text_size">16sp</dimen>
+    <dimen name="recipe_card_steps_number_margin_end">16dp</dimen>
+
+    <dimen name="step_list_item_margin">16dp</dimen>
+    <dimen name="step_list_item_text_size">16sp</dimen>
+
+    <dimen name="ingredient_list_item_divider_height">2dp</dimen>
+    <dimen name="ingredient_list_item_ingredient_name_margin">8dp</dimen>
+    <dimen name="ingredient_list_item_ingredient_name_text_size">16sp</dimen>
+    <dimen name="ingredient_list_item_ingredient_quantity_margin">4dp</dimen>
+    <dimen name="ingredient_list_item_ingredient_quantity_text_size">16sp</dimen>
+    <dimen name="ingredient_list_item_ingredient__measure_margin">4dp</dimen>
+    <dimen name="ingredient_list_item_ingredient_measure_text_size">16sp</dimen>
+
+    <dimen name="fragment_step_step_short_description_text_size">20sp</dimen>
+    <dimen name="fragment_step_step_short_description_margin">8dp</dimen>
+    <dimen name="fragment_step_step_video_margin">8dp</dimen>
+    <dimen name="fragment_step_no_internet_connection_text_size">16sp</dimen>
+    <dimen name="fragment_step_step_description_scroll_view_margin">8dp</dimen>
+    <dimen name="fragment_step_step_description_text_size">20sp</dimen>
+
+    <dimen name="fragment_step_land_step_short_description_text_size">20sp</dimen>
+    <dimen name="fragment_step_land_step_short_description_margin">8dp</dimen>
+    <dimen name="fragment_step_land_step_video_margin">8dp</dimen>
+    <dimen name="fragment_step_land_step_no_internet_connection_text_size">16sp</dimen>
+    <dimen name="fragment_step_land_step_step_description_scroll_view_margin">8dp</dimen>
+    <dimen name="fragment_step_land_step_step_description_text_size">20sp</dimen>
+
+    <dimen name="fragment_ingredients_and_steps_ingredients_button_margin_end">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_ingredients_button_margin_start">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_ingredients_button_margin_top">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_ingredients_button_padding_left">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_ingredients_button_padding_start">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_ingredients_button_padding_right">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_ingredients_button_padding_end">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_ingredients_button_text_size">16sp</dimen>
+
+    <dimen name="fragment_ingredients_and_steps_steps_button_text_size">16sp</dimen>
+    <dimen name="fragment_ingredients_and_steps_steps_button_margin_end">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_steps_button_margin_bottom">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_steps_button_margin_top">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_steps_button_margin_start">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_steps_button_padding_left">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_steps_button_padding_start">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_steps_button_padding_end">16dp</dimen>
+
+    <dimen name="fragment_ingredients_and_steps_recycler_view_margin">10dp</dimen>
+
+    <dimen name="fragment_ingredients_and_steps_progress_bar_width">40dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_progress_bar_height">40dp</dimen>
+
+    <dimen name="fragment_ingredients_and_steps_land_ingredients_button_text_size">16sp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_ingredients_button_margin_start">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_ingredients_button_margin_end">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_ingredients_button_margin_top">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_ingredients_button_margin_bottom">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_ingredients_button_padding_left">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_ingredients_button_padding_start">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_ingredients_button_padding_end">16dp</dimen>
+
+    <dimen name="fragment_ingredients_and_steps_land_steps_button_text_size">16sp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_steps_button_margin_end">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_steps_button_margin_bottom">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_steps_button_margin_top">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_steps_button_margin_start">8dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_steps_button_padding_start">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_steps_button_padding_end">16dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_steps_button_padding_left">16dp</dimen>
+
+    <dimen name="fragment_ingredients_and_steps_land_recycler_view_margin">10dp</dimen>
+
+    <dimen name="fragment_ingredients_and_steps_land_progress_bar_width">40dp</dimen>
+    <dimen name="fragment_ingredients_and_steps_land_progress_bar_height">40dp</dimen>
+    <dimen name="widget_recipe_name_margin">8dp</dimen>
+    <dimen name="widget_recipe_name_text_size">24sp</dimen>
+    <dimen name="widget_recipe_name_padding_start">8dp</dimen>
+    <dimen name="widget_recip_name_padding_left">8dp</dimen>
+    <dimen name="widget_recipe_name_padding_end">8dp</dimen>
+    <dimen name="widget_ingredient_list_view_margin">8dp</dimen>
+    <dimen name="widget_list_item_ingredient_name_margin">4dp</dimen>
+    <dimen name="widget_list_item_ingredient_name_text_size">16sp</dimen>
+    <dimen name="widget_list_item_ingredient_quantity_margin">4dp</dimen>
+    <dimen name="widget_list_item_ingredient_quantity_text_size">16sp</dimen>
+    <dimen name="widget_list_item_ingredient_measure_margin">4dp</dimen>
+    <dimen name="widget_list_item_ingredient_measure_text_size">16sp</dimen>
+
 </resources>

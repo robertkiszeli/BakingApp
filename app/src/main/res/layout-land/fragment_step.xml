@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/step"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/step_short_description"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/fragment_step_land_step_short_description_margin"
+        android:layout_weight="1"
         android:gravity="center"
-        android:textSize="24sp"/>
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/fragment_step_land_step_short_description_text_size"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/step_video"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/fragment_step_land_step_video_margin"
+            android:layout_weight="2"
+            tools:ignore="NestedWeights" />
+
+        <ImageView
+            android:id="@+id/no_video_image"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/fragment_step_land_step_video_margin"
+            android:layout_weight="2"
+            android:contentDescription="@string/fragment_step_no_video_image_content_description"
+            android:src="@drawable/no_video"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/no_internet_connection"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/fragment_step_land_step_video_margin"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/no_internet_connection"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/fragment_step_land_step_no_internet_connection_text_size"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/fragment_step_land_step_step_description_scroll_view_margin"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/step_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/fragment_step_land_step_step_description_text_size" />
+
+        </ScrollView>
+
+    </LinearLayout>
 
 </LinearLayout>

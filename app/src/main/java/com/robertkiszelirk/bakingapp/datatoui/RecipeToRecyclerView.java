@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.robertkiszelirk.bakingapp.data.idlingresource.SimpleIdlingResource;
 import com.robertkiszelirk.bakingapp.data.model.Recipe;
 import com.robertkiszelirk.bakingapp.data.remote.ApiUtils;
 import com.robertkiszelirk.bakingapp.data.remote.RecipeService;
@@ -26,15 +27,21 @@ public class RecipeToRecyclerView {
 
     private RecyclerView recyclerView;
 
+    private ProgressBar progressBar;
+
     private ArrayList<Recipe> recipesList;
 
-    public RecipeToRecyclerView(Context context,RecyclerView recyclerView) {
+    private SimpleIdlingResource simpleIdlingResource;
+
+    public RecipeToRecyclerView(Context context, RecyclerView recyclerView, ProgressBar progressBar, SimpleIdlingResource idlingResource) {
         this.context = context;
         this.recyclerView = recyclerView;
+        this.progressBar = progressBar;
         this.LOG_TAG = context.getPackageName();
+        this.simpleIdlingResource = idlingResource;
     }
 
-    public void loadRecipes(final ProgressBar progressBar) {
+    public void loadRecipes() {
 
         RecipeService recipeService = ApiUtils.getRecipeService();
 
@@ -50,25 +57,26 @@ public class RecipeToRecyclerView {
 
                         recipesList.addAll(response.body());
 
-                        if(recipesList.size() != 0){
+                        if (recipesList.size() != 0) {
 
                             // Load recipes to RecyclerView
-                            RecipeToRecyclerViewAdapter recyclerAdapter = new RecipeToRecyclerViewAdapter(context,recipesList);
+                            RecipeToRecyclerViewAdapter recyclerAdapter = new RecipeToRecyclerViewAdapter(context, recipesList, simpleIdlingResource);
                             recyclerView.setAdapter(recyclerAdapter);
 
                             progressBar.setVisibility(View.INVISIBLE);
                             recyclerView.setVisibility(View.VISIBLE);
                         }
                     }
+
                 } else {
-                    Log.d(LOG_TAG,"Status code : "+ response.code());
+                    Log.d(LOG_TAG, "Status code : " + response.code());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<Recipe>> call, @NonNull Throwable t) {
-                Toast.makeText(context,"Error loading data from API",Toast.LENGTH_SHORT).show();
-                Log.d(LOG_TAG,"Error loading from API");
+                Toast.makeText(context, "Error loading data from API", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "Error loading from API");
             }
         });
     }

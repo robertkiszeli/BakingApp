@@ -6,18 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient implements Parcelable
-{
+public class Ingredient implements Parcelable {
 
-    @SerializedName("quantity")
-    @Expose
-    private Double quantity;
-    @SerializedName("measure")
-    @Expose
-    private String measure;
-    @SerializedName("ingredient")
-    @Expose
-    private String ingredient;
     public final static Parcelable.Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
 
 
@@ -32,10 +22,18 @@ public class Ingredient implements Parcelable
             return (new Ingredient[size]);
         }
 
-    }
-            ;
+    };
+    @SerializedName("quantity")
+    @Expose
+    private Double quantity;
+    @SerializedName("measure")
+    @Expose
+    private String measure;
+    @SerializedName("ingredient")
+    @Expose
+    private String ingredient;
 
-    protected Ingredient(Parcel in) {
+    private Ingredient(Parcel in) {
         this.quantity = ((Double) in.readValue((Integer.class.getClassLoader())));
         this.measure = ((String) in.readValue((String.class.getClassLoader())));
         this.ingredient = ((String) in.readValue((String.class.getClassLoader())));

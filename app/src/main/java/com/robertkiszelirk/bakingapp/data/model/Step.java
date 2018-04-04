@@ -6,9 +6,23 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Step implements Parcelable
-{
+public class Step implements Parcelable {
 
+    public final static Parcelable.Creator<Step> CREATOR = new Creator<Step>() {
+
+
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
+        }
+
+        public Step[] newArray(int size) {
+            return (new Step[size]);
+        }
+
+    };
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -24,22 +38,6 @@ public class Step implements Parcelable
     @SerializedName("thumbnailURL")
     @Expose
     private String thumbnailURL;
-    public final static Parcelable.Creator<Step> CREATOR = new Creator<Step>() {
-
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public Step createFromParcel(Parcel in) {
-            return new Step(in);
-        }
-
-        public Step[] newArray(int size) {
-            return (new Step[size]);
-        }
-
-    }
-            ;
 
     protected Step(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));

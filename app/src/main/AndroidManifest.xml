@@ -3,7 +3,7 @@
     package="com.robertkiszelirk.bakingapp">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +20,26 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.IngredientsAndSteps" />
-        <activity android:name=".ui.activity.Step" />
+        <activity
+            android:name=".ui.activity.ShowStep"
+            android:theme="@style/StepTheme" />
+
+        <receiver android:name=".ui.widget.BakingAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.robertkiszelirk.bakingapp.datatoui.action.update_widget" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_app_widget_info" />
+        </receiver>
+
+        <service android:name=".datatoui.WidgetService" />
+        <service
+            android:name=".datatoui.WidgetListViewService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

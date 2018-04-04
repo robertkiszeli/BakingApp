@@ -1,66 +1,105 @@
 package com.robertkiszelirk.bakingapp.ui.fragment;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.robertkiszelirk.bakingapp.R;
-import com.robertkiszelirk.bakingapp.data.model.Ingredient;
 import com.robertkiszelirk.bakingapp.data.model.Recipe;
+import com.robertkiszelirk.bakingapp.datatoui.IngredientToRecyclerView;
+import com.robertkiszelirk.bakingapp.datatoui.StepToRecyclerView;
 
-import java.util.ArrayList;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class IngredientsAndStepsFragment extends Fragment {
 
-    public IngredientsAndStepsFragment(){ }
+    @BindView(R.id.select_ingredients_list)
+    AppCompatButton selectIngredientsList;
+    @BindView(R.id.select_steps_list)
+    AppCompatButton selectStepsList;
+    @BindView(R.id.ingredients_and_steps_list)
+    RecyclerView ingredientAndStepsList;
+    @BindView(R.id.ingredients_steps_load_progress_bar)
+    ProgressBar ingredientAndStepsProgressBar;
+    private Recipe recipe;
+    private View rootView;
 
-    OnClickListener showStep;
-
-    public interface OnClickListener{
-        void textClicked();
-    }
-
-    public void onAttach(Context context){
-        super.onAttach(context);
-
-        try{
-            showStep = (OnClickListener) context;
-        }catch (ClassCastException e){
-            throw new ClassCastException(context.toString()
-            + "must implement showStep");
-        }
+    public IngredientsAndStepsFragment() {
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Recipe recipe = getArguments().getParcelable("recipedata");
+        // Create view
+        rootView = inflater.inflate(R.layout.fragment_ingredients_and_steps, container, false);
 
-        View rootView = inflater.inflate(R.layout.fragment_ingredients_and_steps, container, false);
+        ButterKnife.bind(this, rootView);
 
-        TextView textView = (TextView) rootView.findViewById(R.id.ingredients_and_steps);
+        if (getArguments() != null) {
 
-        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recipe = getArguments().getParcelable(rootView.getContext().getString(R.string.pass_recipe_in_intent));
 
-            textView.setText("Ingredients and steps landscape");
-        }else{
-            textView.setText(recipe.getName());
+            // Set RecyclerView
+            ingredientAndStepsList.setHasFixedSize(true);
+
+            ingredientAndStepsList.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
+
+            // Set steps list as default
+            setStepsList();
+
+            // Change to ingredients list
+            selectIngredientsList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ingredientAndStepsList.setVisibility(View.GONE);
+                    ingredientAndStepsProgressBar.setVisibility(View.VISIBLE);
+
+                    setIngredientsList();
+                }
+            });
+
+            // Change to steps list
+            selectStepsList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ingredientAndStepsList.setVisibility(View.GONE);
+                    ingredientAndStepsProgressBar.setVisibility(View.VISIBLE);
+
+                    setStepsList();
+                }
+            });
+        } else {
+            Toast.makeText(rootView.getContext(), getString(R.string.no_passed_data), Toast.LENGTH_SHORT).show();
         }
-
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showStep.textClicked();
-            }
-        });
-
         return rootView;
+    }
+
+    private void setIngredientsList() {
+
+        IngredientToRecyclerView ingredientToRecyclerView = new IngredientToRecyclerView(ingredientAndStepsList, ingredientAndStepsProgressBar);
+
+        ingredientToRecyclerView.loadIngredients(recipe.getIngredients());
+
+    }
+
+    private void setStepsList() {
+
+        StepToRecyclerView stepToRecyclerView = new StepToRecyclerView(rootView.getContext(), ingredientAndStepsList, ingredientAndStepsProgressBar);
+
+        stepToRecyclerView.loadSteps(recipe.getSteps());
+
     }
 }
