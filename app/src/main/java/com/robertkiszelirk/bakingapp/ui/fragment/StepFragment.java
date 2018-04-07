@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -26,6 +29,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.robertkiszelirk.bakingapp.R;
+import com.robertkiszelirk.bakingapp.data.idlingresource.SimpleIdlingResource;
 import com.robertkiszelirk.bakingapp.data.model.Step;
 
 import butterknife.BindView;
@@ -39,8 +43,8 @@ public class StepFragment extends Fragment {
     @BindView(R.id.step_video)
     PlayerView videoPlayerView;
 
-    @BindView(R.id.no_video_image)
-    ImageView noVideoImage;
+    @BindView(R.id.video_image)
+    ImageView videoImage;
 
     @BindView(R.id.no_internet_connection)
     TextView noInternetConnection;
@@ -52,8 +56,10 @@ public class StepFragment extends Fragment {
     boolean playWhenReady = false;
     int currentWindow = 0;
     long playbackPosition = 0;
-    private Step step;
     private View rootView;
+
+    @Nullable
+    private SimpleIdlingResource simpleIdlingResource;
 
     public StepFragment() {
     }
@@ -67,6 +73,9 @@ public class StepFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
 
+        simpleIdlingResource = getSimpleIdlingResource();
+        simpleIdlingResource.setIdleState(false);
+
         // Release player if it is not null
         if (player != null) {
             releasePlayer();
@@ -75,7 +84,12 @@ public class StepFragment extends Fragment {
         if (getArguments() != null) {
 
             // Get step data
-            step = getArguments().getParcelable(rootView.getContext().getString(R.string.pass_step_data_to_fragment_bundle));
+            Step step = getArguments().getParcelable(rootView.getContext().getString(R.string.pass_step_data_to_fragment_bundle));
+
+            if(savedInstanceState != null){
+                playWhenReady = savedInstanceState.getBoolean("playWhenReady");
+                playbackPosition = savedInstanceState.getLong("playbackPosition");
+            }
 
             // Set step data
             if (step != null) {
@@ -85,29 +99,54 @@ public class StepFragment extends Fragment {
 
                 if (checkInternetConnection()) {
                     noInternetConnection.setVisibility(View.GONE);
-                    if (step.getVideoURL().length() != 0) {
-                        videoPlayerView.setVisibility(View.VISIBLE);
-                        noVideoImage.setVisibility(View.GONE);
-                        // Set player
-                        initializePlayer(rootView.getContext());
-                    } else {
-                        videoPlayerView.setVisibility(View.GONE);
-                        noVideoImage.setVisibility(View.VISIBLE);
+                    if((step.getVideoURL() != null)
+                        &&(step.getVideoURL().length() >= 3)){
+                        if ((step.getVideoURL().substring(step.getVideoURL().length() - 3)).equals("mp4")){
+                            videoPlayerView.setVisibility(View.VISIBLE);
+                            videoImage.setVisibility(View.GONE);
+                            // Set player
+                            initializePlayer(rootView.getContext(), step.getVideoURL());
+                        }else{
+                            videoPlayerView.setVisibility(View.GONE);
+                            videoImage.setVisibility(View.VISIBLE);
+                        }
+                    }else{
+                        if ((step.getThumbnailURL() != null)
+                            &&(step.getThumbnailURL().length() >= 3)){
+                                if(step.getThumbnailURL().substring(step.getThumbnailURL().length() - 3).equals("mp4")){
+                                    videoPlayerView.setVisibility(View.VISIBLE);
+                                    videoImage.setVisibility(View.GONE);
+                                    // Set player
+                                    initializePlayer(rootView.getContext(), step.getThumbnailURL());
+                                }else{
+                                    RequestOptions options = new RequestOptions()
+                                            .centerCrop()
+                                            .placeholder(R.drawable.no_video)
+                                            .error(R.drawable.no_video);
+
+                                    Glide.with(this)
+                                            .load(step.getThumbnailURL())
+                                            .apply(options)
+                                            .into(videoImage);
+                                }
+                            }else{
+                                videoPlayerView.setVisibility(View.GONE);
+                                videoImage.setVisibility(View.VISIBLE);
+                            }
                     }
                 } else {
                     videoPlayerView.setVisibility(View.GONE);
-                    noVideoImage.setVisibility(View.GONE);
+                    videoImage.setVisibility(View.GONE);
                     noInternetConnection.setVisibility(View.VISIBLE);
                 }
             } else {
                 Toast.makeText(rootView.getContext(), rootView.getContext().getString(R.string.no_passed_data), Toast.LENGTH_SHORT).show();
             }
         }
-
         return rootView;
     }
 
-    private void initializePlayer(Context context) {
+    private void initializePlayer(Context context,String videoUrl) {
 
         player = ExoPlayerFactory.newSimpleInstance(
                 new DefaultRenderersFactory(context),
@@ -115,17 +154,17 @@ public class StepFragment extends Fragment {
 
         videoPlayerView.setPlayer(player);
 
-
-        player.setPlayWhenReady(playWhenReady);
-
-        player.seekTo(currentWindow, playbackPosition);
-
-        Uri uri = Uri.parse(step.getVideoURL());
+        Uri uri = Uri.parse(videoUrl);
         MediaSource mediaSource = buildMediaSource(uri);
         player.prepare(mediaSource, true, false);
 
-    }
+        player.seekTo(currentWindow, playbackPosition);
 
+        player.setPlayWhenReady(playWhenReady);
+
+        simpleIdlingResource.setIdleState(true);
+
+    }
 
     private MediaSource buildMediaSource(Uri uri) {
         return new ExtractorMediaSource.Factory(
@@ -134,11 +173,32 @@ public class StepFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        releasePlayer();
+    public void onResume() {
+        super.onResume();
+        if((player != null)&&(playWhenReady)){
+            player.setPlayWhenReady(true);
+        }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(player != null){
+            if(player.getPlayWhenReady()){
+                player.setPlayWhenReady(false);
+                playWhenReady = true;
+            }else{
+                playWhenReady = false;
+            }
+        }
+        //IngredientsAndSteps.setPlayerData(player.getCurrentPosition(),playWhenReady);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        releasePlayer();
+    }
 
     private void releasePlayer() {
         if (player != null) {
@@ -157,5 +217,22 @@ public class StepFragment extends Fragment {
             activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         }
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("playWhenReady",playWhenReady);
+        outState.putLong("playbackPosition",player.getCurrentPosition());
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public SimpleIdlingResource getSimpleIdlingResource() {
+        if (simpleIdlingResource == null) {
+            simpleIdlingResource = new SimpleIdlingResource();
+        }
+        return simpleIdlingResource;
     }
 }

@@ -21,8 +21,7 @@
         </activity>
         <activity android:name=".ui.activity.IngredientsAndSteps" />
         <activity
-            android:name=".ui.activity.ShowStep"
-            android:theme="@style/StepTheme" />
+            android:name=".ui.activity.ShowStep"/>
 
         <receiver android:name=".ui.widget.BakingAppWidget">
             <intent-filter>

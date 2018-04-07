@@ -31,7 +31,7 @@
             tools:ignore="NestedWeights" />
 
         <ImageView
-            android:id="@+id/no_video_image"
+            android:id="@+id/video_image"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/fragment_step_land_step_video_margin"

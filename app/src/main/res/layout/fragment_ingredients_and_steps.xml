@@ -15,7 +15,7 @@
             android:id="@+id/select_ingredients_list"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/fragment_ingredients_and_steps_ingredients_button_margin_top"
             android:layout_marginEnd="@dimen/fragment_ingredients_and_steps_ingredients_button_margin_end"
             android:layout_marginStart="@dimen/fragment_ingredients_and_steps_ingredients_button_margin_start"
@@ -34,7 +34,7 @@
             android:id="@+id/select_steps_list"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/fragment_ingredients_and_steps_steps_button_margin_bottom"
             android:layout_marginEnd="@dimen/fragment_ingredients_and_steps_steps_button_margin_end"
             android:layout_marginStart="@dimen/fragment_ingredients_and_steps_steps_button_margin_start"
@@ -46,8 +46,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/select_ingredients_list"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

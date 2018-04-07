@@ -99,7 +99,7 @@ public class IngredientsAndStepsFragment extends Fragment {
 
         StepToRecyclerView stepToRecyclerView = new StepToRecyclerView(rootView.getContext(), ingredientAndStepsList, ingredientAndStepsProgressBar);
 
-        stepToRecyclerView.loadSteps(recipe.getSteps());
+        stepToRecyclerView.loadSteps(recipe.getSteps(),recipe.getName());
 
     }
 }

@@ -1,7 +1,6 @@
 package com.robertkiszelirk.bakingapp.ui.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -24,14 +23,19 @@ public class IngredientsAndSteps extends AppCompatActivity implements StepToRecy
     private FragmentManager fragmentManager;
     private StepFragment stepFragment;
     private Recipe recipe;
-    private int currentStep = 0;
+    //private int currentStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingridients_and_steps);
+        setContentView(R.layout.ingredients_and_steps);
 
         ButterKnife.bind(this);
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         fragmentManager = getSupportFragmentManager();
 
@@ -44,28 +48,22 @@ public class IngredientsAndSteps extends AppCompatActivity implements StepToRecy
             }
 
             // Get saved current step
-            if (savedInstanceState != null) {
-                currentStep = savedInstanceState.getInt(getString(R.string.ingredient_and_steps_current_step));
-            }
+            if (savedInstanceState == null) {
+                //currentStep = savedInstanceState.getInt(getString(R.string.ingredient_and_steps_current_step));
 
-            // Create Step fragment
-            stepFragment = new StepFragment();
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(getString(R.string.pass_step_data_to_fragment_bundle), recipe.getSteps().get(currentStep));
+                // Create Step fragment
+                stepFragment = new StepFragment();
 
-            stepFragment.setArguments(bundle);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(getString(R.string.pass_step_data_to_fragment_bundle), recipe.getSteps().get(0));
 
-            if (fragmentManager.findFragmentByTag("step") == null) {
+                stepFragment.setArguments(bundle);
+
                 fragmentManager.beginTransaction()
                         .add(R.id.step_detail, stepFragment)
                         .commit();
-            } else {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.step_detail, stepFragment)
-                        .commit();
             }
-
             twoFragment = true;
         } else {
             twoFragment = false;
@@ -86,7 +84,7 @@ public class IngredientsAndSteps extends AppCompatActivity implements StepToRecy
                 ingredientsAndStepsFragment.setArguments(bundle);
 
                 fragmentManager.beginTransaction()
-                        .add(R.id.main_container, ingredientsAndStepsFragment)
+                        .add(R.id.ingredient_step_list_container, ingredientsAndStepsFragment)
                         .commit();
             } else {
                 Toast.makeText(this, R.string.no_passed_data, Toast.LENGTH_SHORT).show();
@@ -131,15 +129,6 @@ public class IngredientsAndSteps extends AppCompatActivity implements StepToRecy
     public void onSaveInstanceState(Bundle outState) {
 
         outState.putParcelable(getString(R.string.instance_state_save_pass_recipe), recipe);
-        outState.putInt(getString(R.string.ingredient_and_steps_current_step), currentStep);
-
-        // Remove step detail fragment on orientation change
-        Fragment fragment = fragmentManager.findFragmentById(R.id.step_detail);
-        if (fragment != null) {
-            fragmentManager.beginTransaction()
-                    .remove(fragment)
-                    .commit();
-        }
 
         super.onSaveInstanceState(outState);
     }
@@ -162,11 +151,10 @@ public class IngredientsAndSteps extends AppCompatActivity implements StepToRecy
                 .commit();
     }
 
-    // To save current selected step
     @Override
-    public void passSelectedStep(int position) {
-        currentStep = position;
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
-
 
 }

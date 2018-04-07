@@ -22,11 +22,14 @@ public class StepToRecyclerViewAdapter extends RecyclerView.Adapter<StepToRecycl
 
     private final ArrayList<Step> stepList;
 
+    private final String recipeName;
+
     private ChangeStep changeStep;
 
-    StepToRecyclerViewAdapter(Context context, ArrayList<Step> stepList) {
+    StepToRecyclerViewAdapter(Context context, ArrayList<Step> stepList, String recipeName) {
         this.context = context;
         this.stepList = stepList;
+        this.recipeName = recipeName;
     }
 
     @NonNull
@@ -69,8 +72,6 @@ public class StepToRecyclerViewAdapter extends RecyclerView.Adapter<StepToRecycl
 
     public interface ChangeStep {
         void whenTowFragment(int position);
-
-        void passSelectedStep(int position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -89,9 +90,9 @@ public class StepToRecyclerViewAdapter extends RecyclerView.Adapter<StepToRecycl
                     if (IngredientsAndSteps.twoFragment) {
                         changeStep.whenTowFragment(getAdapterPosition());
                     } else {
-                        changeStep.passSelectedStep(getAdapterPosition());
                         Intent intent = new Intent(v.getContext(), ShowStep.class);
                         intent.putExtra(v.getContext().getString(R.string.pass_step_data_to_fragment_bundle), stepList.get(getAdapterPosition()));
+                        intent.putExtra("recipeName",recipeName);
                         v.getContext().startActivity(intent);
                     }
                 }

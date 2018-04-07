@@ -28,7 +28,6 @@ public class BakingAppWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
         if (recipe != null) {
             views.setTextViewText(R.id.widget_recipe_name, recipe.getName());
-
             Intent listIntent = new Intent(context, WidgetListViewService.class);
             Bundle bundle = new Bundle();
             bundle.putParcelable("recipe", recipe);
@@ -79,6 +78,8 @@ public class BakingAppWidget extends AppWidgetProvider {
                 Log.e(context.getPackageName(), "Recipe is null");
             }
             onUpdate(context, appWidgetManager, appWidgetIds);
+        }else{
+            Log.e(context.getPackageName(),"No passed data\n"+action);
         }
 
         super.onReceive(context, intent);

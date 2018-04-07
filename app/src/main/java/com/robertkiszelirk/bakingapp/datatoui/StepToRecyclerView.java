@@ -23,9 +23,9 @@ public class StepToRecyclerView {
         this.progressBar = progressBar;
     }
 
-    public void loadSteps(ArrayList<Step> stepList) {
+    public void loadSteps(ArrayList<Step> stepList,String recipeName) {
 
-        StepToRecyclerViewAdapter recyclerAdapter = new StepToRecyclerViewAdapter(context, stepList);
+        StepToRecyclerViewAdapter recyclerAdapter = new StepToRecyclerViewAdapter(context, stepList, recipeName);
 
         recyclerView.setAdapter(recyclerAdapter);
 

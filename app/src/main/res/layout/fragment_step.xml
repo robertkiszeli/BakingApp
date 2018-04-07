@@ -24,7 +24,7 @@
         android:layout_weight="4" />
 
     <ImageView
-        android:id="@+id/no_video_image"
+        android:id="@+id/video_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/fragment_step_step_video_margin"
